@@ -383,7 +383,10 @@ object LuaStatementParser : GeneratedParserUtilBase() {
                         c = c.precede()
                         c.done(VAR_LIST)
                         expectError(b, ASSIGN) { "'='" }
-                    } else if (b.tokenType == ASSIGN) {
+                    } else if (b.tokenType == ASSIGN || b.tokenType == PLUS_ASSIGN || b.tokenType == MINUS_ASSIGN ||
+                    b.tokenType == DIVIDE_ASSIGN || b.tokenType == TIMES_ASSIGN || b.tokenType == AND_ASSIGN ||
+                    b.tokenType == OR_ASSIGN || b.tokenType == XOR_ASSIGN || b.tokenType == MOD_ASSIGN ||
+                    b.tokenType == SHIFT_LEFT_ASSIGN || b.tokenType == SHIFT_RIGHT_ASSIGN) {
                         c = c.precede()
                         c.done(VAR_LIST)
 
