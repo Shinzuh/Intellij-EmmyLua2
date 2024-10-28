@@ -67,6 +67,7 @@
                 implementation="com.tang.intellij.lua.codeInsight.highlighting.LuaHighlightUsagesHandlerFactory"/>
 
         <readWriteAccessDetector implementation="com.tang.intellij.lua.codeInsight.LuaReadWriteAccessDetector"/>
+        <colorSettingsPage implementation="com.tang.intellij.lua.editor.LuaColorSettingsPage"/>
 
         <!--        debugger-->
         <programRunner implementation="com.tang.intellij.lua.debugger.emmy.EmmyDebuggerRunner"/>
