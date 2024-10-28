@@ -32,10 +32,11 @@ val buildDataList = listOf(
 )
 
 group = "com.cppcxy"
-val emmyluaAnalyzerVersion = "0.7.1"
+val emmyluaAnalyzerVersion = "0.7.2"
 val emmyDebuggerVersion = "1.8.2"
 
-val emmyluaAnalyzerProjectUrl = "https://github.com/CppCXY/EmmyLuaAnalyzer"
+//val emmyluaAnalyzerProjectUrl = "https://github.com/CppCXY/EmmyLuaAnalyzer"
+val emmyluaAnalyzerProjectUrl = "https://github.com/Shinzuh/EmmyLuaAnalyzer"
 val emmyluaCodeStyleProjectUrl = "https://github.com/CppCXY/EmmyLuaCodeStyle"
 
 val buildVersion = System.getProperty("IDEA_VER") ?: buildDataList.first().ideaSDKShortVersion
@@ -44,7 +45,7 @@ val buildVersionData = buildDataList.find { it.ideaSDKShortVersion == buildVersi
 
 val runnerNumber = System.getenv("RUNNER_NUMBER") ?: "Dev"
 
-version = "${emmyluaAnalyzerVersion}.${runnerNumber}-IDEA${buildVersion}"
+version = "${emmyluaAnalyzerVersion}.${runnerNumber}-IDEA${buildVersion}-1"
 
 
 task("download", type = Download::class) {
@@ -195,8 +196,10 @@ tasks {
     prepareSandbox {
         doLast {
             copy {
-                from("${project.projectDir}/src/main/resources/server")
-                into("${destinationDir.path}/${pluginName.get()}/server")
+//                from("${project.projectDir}/src/main/resources/server")
+//                into("${destinationDir.path}/${pluginName.get()}/server")
+                from("X:/Dev/EmmyLuaAnalyzer/EmmyLua.LanguageServer/bin/Release/net9.0/EmmyLua.LanguageServer-win32-x64")
+                into("${destinationDir.path}/${pluginName.get()}/server/EmmyLua.LanguageServer-win32-x64")
             }
             copy {
                 from("${project.projectDir}/src/main/resources/debugger")

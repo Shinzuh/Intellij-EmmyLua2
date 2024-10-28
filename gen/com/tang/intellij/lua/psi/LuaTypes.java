@@ -56,6 +56,16 @@ public interface LuaTypes {
 
   IElementType AND = LuaParserDefinitionKt.createToken("and");
   IElementType ASSIGN = LuaParserDefinitionKt.createToken("=");
+  IElementType PLUS_ASSIGN = LuaParserDefinitionKt.createToken("+=");
+  IElementType MINUS_ASSIGN = LuaParserDefinitionKt.createToken("-=");
+  IElementType DIVIDE_ASSIGN = LuaParserDefinitionKt.createToken("/=");
+  IElementType TIMES_ASSIGN = LuaParserDefinitionKt.createToken("*=");
+  IElementType AND_ASSIGN = LuaParserDefinitionKt.createToken("&=");
+  IElementType OR_ASSIGN = LuaParserDefinitionKt.createToken("|=");
+  IElementType XOR_ASSIGN = LuaParserDefinitionKt.createToken("^=");
+  IElementType MOD_ASSIGN = LuaParserDefinitionKt.createToken("%=");
+  IElementType SHIFT_LEFT_ASSIGN = LuaParserDefinitionKt.createToken("<<=");
+  IElementType SHIFT_RIGHT_ASSIGN = LuaParserDefinitionKt.createToken(">>=");
   IElementType BIT_AND = LuaParserDefinitionKt.createToken("&");
   IElementType BIT_LTLT = LuaParserDefinitionKt.createToken("<<");
   IElementType BIT_OR = LuaParserDefinitionKt.createToken("|");
@@ -64,6 +74,7 @@ public interface LuaTypes {
   IElementType BLOCK_COMMENT = LuaParserDefinitionKt.createToken("BLOCK_COMMENT");
   IElementType BREAK = LuaParserDefinitionKt.createToken("break");
   IElementType COLON = LuaParserDefinitionKt.createToken(":");
+  IElementType OPTIONAL_CHAIN = LuaParserDefinitionKt.createToken("?.");
   IElementType COMMA = LuaParserDefinitionKt.createToken(",");
   IElementType CONCAT = LuaParserDefinitionKt.createToken("..");
   IElementType DIV = LuaParserDefinitionKt.createToken("/");
