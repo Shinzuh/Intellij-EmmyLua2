@@ -85,6 +85,22 @@ JIT_EXT_NUMBER=(0[xX]{h}|{n})U?LL
 HEX_NUMBER=0[xX]({h}|{h}[.]{h})({exp}|{ppp})?
 NUMBER={JIT_EXT_NUMBER}|{HEX_NUMBER}|({n}|{n}[.]{n}){exp}?|[.]{n}|{n}[.]
 
+//OPTIONNAL CHAINING
+OPTIONAL_CHAIN="?."
+
+//SHORTCUTS
+PLUS_ASSIGN = "\+="
+MINUS_ASSIGN = "-="
+DIVIDE_ASSIGN = "/="
+TIMES_ASSIGN = "\*="
+AND_ASSIGN = "&="
+OR_ASSIGN = "\|="
+XOR_ASSIGN = "\^="
+MOD_ASSIGN = "%="
+SHIFT_LEFT_ASSIGN = "<<="
+SHIFT_RIGHT_ASSIGN = ">>="
+
+
 //Comments
 REGION_START =--(region|\{\{\{)([^\r\n]*)*
 REGION_END =--(endregion|\}\}\})([^\r\n]*)*
@@ -95,12 +111,14 @@ DOC_COMMENT=----*[^\r\n]*(\r?\n{LINE_WS}*----*[^\r\n]*)*
 //Strings
 DOUBLE_QUOTED_STRING=\"([^\\\"]|\\\S|\\[\r\n])*\"?  //\"([^\\\"\r\n]|\\[^\r\n])*\"?
 SINGLE_QUOTED_STRING='([^\\\']|\\\S|\\[\r\n])*'?    //'([^\\'\r\n]|\\[^\r\n])*'?
+BACKTICK_STRING=`[a-zA-Z0-9_]*`?    //'([^\\'\r\n]|\\[^\r\n])*'?
 //[[]]
 LONG_STRING=\[=*\[[\s\S]*\]=*\]
 
 %state xSHEBANG
 %state xDOUBLE_QUOTED_STRING
 %state xSINGLE_QUOTED_STRING
+%state xBACKTICK_STRING
 %state xBLOCK_STRING
 %state xCOMMENT
 %state xBLOCK_COMMENT
@@ -110,6 +128,18 @@ LONG_STRING=\[=*\[[\s\S]*\]=*\]
   {WHITE_SPACE}               { return TokenType.WHITE_SPACE; }
   {REGION_START}              { return REGION; }
   {REGION_END}                { return ENDREGION; }
+  {OPTIONAL_CHAIN}            { return OPTIONAL_CHAIN; }
+  {PLUS_ASSIGN}               { return PLUS_ASSIGN; }
+  {MINUS_ASSIGN}              { return MINUS_ASSIGN; }
+  {DIVIDE_ASSIGN}             { return DIVIDE_ASSIGN; }
+  {TIMES_ASSIGN}              { return TIMES_ASSIGN; }
+  {AND_ASSIGN}                { return AND_ASSIGN; }
+  {OR_ASSIGN}                 { return OR_ASSIGN; }
+  {XOR_ASSIGN}                { return XOR_ASSIGN; }
+  {MOD_ASSIGN}                { return MOD_ASSIGN; }
+  {SHIFT_LEFT_ASSIGN}         { return SHIFT_LEFT_ASSIGN; }
+  {SHIFT_RIGHT_ASSIGN}        { return SHIFT_RIGHT_ASSIGN; }
+
   "--"                        {
         boolean block = checkBlock();
         if (block) {
@@ -188,6 +218,7 @@ LONG_STRING=\[=*\[[\s\S]*\]=*\]
 
   "\""                        { yybegin(xDOUBLE_QUOTED_STRING); yypushback(yylength()); }
   "'"                         { yybegin(xSINGLE_QUOTED_STRING); yypushback(yylength()); }
+  "`"                         { yybegin(xBACKTICK_STRING); yypushback(yylength()); }
 
   {ID}                        { return ID; }
   {NUMBER}                    { return NUMBER; }
@@ -210,4 +241,8 @@ LONG_STRING=\[=*\[[\s\S]*\]=*\]
 
 <xSINGLE_QUOTED_STRING> {
     {SINGLE_QUOTED_STRING}    { yybegin(YYINITIAL); return STRING; }
+}
+
+<xBACKTICK_STRING> {
+    {BACKTICK_STRING}    { yybegin(YYINITIAL); return STRING; }
 }
